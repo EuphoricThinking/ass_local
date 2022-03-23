@@ -9,12 +9,17 @@ mac1:
 	ret
 
 mac2:
-	imul [rdx + 8], rsi
-	imul [rsi + 8], rdx
-	mov rax, rdx
-	mul rsi
-	add rdx, [rdx + 8]
-	add rdx, [rsi + 8]
-	add rax, rdi
-	adc rdx, [rdi + 8]
+	mov r8, [rsi]
+	mov r9, [rdx]
+
+	imul r8, [rdx + 8]
+	imul r9, [rsi + 8]
+	mov rax, [rsi]
+	mul qword [rdx]
+
+	add rdx, r8
+	add rdx, r9
+
+	add [rdi], rax
+	adc [rdi + 8], rdx
 	ret
