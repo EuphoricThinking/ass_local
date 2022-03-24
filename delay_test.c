@@ -8,7 +8,7 @@ int main() {
 	uint64_t t = delay(n);
 	printf("%f\n", (double)t / (double)n);
 
-	n = 7;
+	n = 20;
 	t = delay(n);
 	printf("%f\n", (double)t / (double)n);
 

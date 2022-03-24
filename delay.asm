@@ -1,5 +1,6 @@
 global delay
 
+align 16
 delay:
 	cmp edi, 0x0
 	jz .exit
