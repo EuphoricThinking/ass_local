@@ -1,4 +1,4 @@
-nasm -f elf64 -w+all -w+error -o mac.o mac.asm
+nasm -f elf64 -w+all -w+error -o delay.o delay.asm
 
-gcc -c -Wall -Wextra -std=c17 -O2 -o mac_test.o mac_test.c
-gcc -o mac_test mac.o mac_test.o
+gcc -c -Wall -Wextra -std=c17 -O2 -o delay_test.o delay_test.c
+gcc -o delay_test delay.o delay_test.o
