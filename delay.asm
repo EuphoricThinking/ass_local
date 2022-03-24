@@ -9,4 +9,8 @@ delay:
 	jnz .loop
 
 .exit:
+	rdtsc
+	shl rdx, 0x20
+	or rax, rdx
+
 	ret
