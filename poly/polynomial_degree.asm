@@ -37,21 +37,21 @@ polynomial_degree:
 	mov rbx, rsp
 
 
-.check_single:
-	cmp rsi, 0x1
-	je .ret_single_element
-
 .check_zero_stack:
 	mov rdx, [rbx]
 	test edx, edx
-	jnz .before_iterate
+	jnz .check_single
 	add rbx, 8
 	loop .check_zero_stack
 
 	lea rdx, [rsi*8]
 	add rsp, rdx
 	ret
-
+	
+.check_single:
+	cmp rsi, 0x1
+	je .ret_single_element
+	
 .before_iterate:
 	lea rdx, [rsp + 8*(rsi - 1)]
 	mov rbx, rdx
@@ -71,7 +71,7 @@ polynomial_degree:
 	mov rcx, rsi
 	add rsp, 8
 	mov rbx, rsp	
-	jmp .check_single
+	jmp .check_zero_stack
 
 .ret_single_element_before:
 	ret
