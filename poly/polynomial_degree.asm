@@ -32,7 +32,8 @@ polynomial_degree:
 	loop .first_iteration
 
 	dec rsi
-	add rsp, 8
+	lea rdx, [rsi*8]
+	add rsp, rdx
 	ret
 	mov rcx, rsi
 	dec rcx
