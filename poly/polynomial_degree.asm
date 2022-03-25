@@ -28,15 +28,16 @@ polynomial_degree:
 	mov rdx, [rbx + 4]
 	sub rdx, [rbx]
 	push rdx
-	pop rdx
-	ret
 	add rbx, 4
 	loop .first_iteration
 
-	mov rbx, rbp
 	dec rsi
+	add rsp, 8
+	ret
 	mov rcx, rsi
 	dec rcx
+
+	mov rbx, rbp
 
 .check_single:
 	cmp rsi, 0x1
