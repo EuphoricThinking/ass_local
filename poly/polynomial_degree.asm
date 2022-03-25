@@ -43,7 +43,7 @@ polynomial_degree:
 	mov rdx, [rbx]
 	test edx, edx
 	jnz .before_iterate
-	add rbx, 4
+	sub rbx, 4
 	loop .check_zero_stack
 
 	ret
@@ -56,10 +56,10 @@ polynomial_degree:
 	mov rdx, [rbx + 4]
 	sub edx, [ebx]
 	mov dword [ebx], edx
-	add rbx, 4
-	dec rcx
-	jnz .iterate
+	sub rbx, 4
+	loop .iterate
 
+	inc rax
 	dec rsi
 	mov rcx rsi
 	add esp, 4
