@@ -20,7 +20,8 @@ polynomial_degree:
 	inc rax
 	cmp rsi, 0x1
 	je .ret_single_element_before
-	mov rcx, [rsi - 1]
+	mov rcx, rsi
+	dec rcx
 	mov rbx, rdi
 
 .first_iteration:
