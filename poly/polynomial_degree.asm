@@ -56,14 +56,8 @@ polynomial_degree:
 	lea rdx, [rsp + 8*(rsi - 1)]
 	mov rbx, rdx
 	
-	mov rax, [rbx]
-	lea rdx, [8*rsi]
-	add rsp, rdx
-	ret
-	
 	mov rcx, rsi
 	dec rcx
-
 
 .iterate:
 	mov rdx, [rbx - 8]
@@ -75,8 +69,8 @@ polynomial_degree:
 	inc rax
 	dec rsi
 	mov rcx, rsi
-	mov rbx, rbp
 	add rsp, 8
+	mov rbx, rsp
 	jmp .check_single
 
 .ret_single_element_before:
