@@ -11,7 +11,7 @@ polynomial_degree:
 	test edx, edx
 	jnz .before_first_iteration
 	add rbx, 4
-	loop .check_zero_poly
+	loop .check_zero_init
 
 	ret
 
@@ -19,7 +19,7 @@ polynomial_degree:
 .before_first_iteration:
 	inc rax
 	cmp rsi, 0x1
-	je .ret_single_element
+	je .ret_single_element_before
 	mov rcx, [rsi - 1]
 	mov rbx, rdi
 
@@ -28,12 +28,11 @@ polynomial_degree:
 	sub edx, [ebx]
 	push edx
 	add rbx, 4
-	dec rcx
-	jnz .first_iteration
+	loop .first_iteration
 
 	mov rbx, rbp
 	dec rsi
-	mov rcx, rsi
+	mov rcx, [rsi - 1]
 
 .check_single:
 	cmp rsi, 0x1
@@ -46,11 +45,12 @@ polynomial_degree:
 	sub rbx, 4
 	loop .check_zero_stack
 
+	add rsp, rsi
 	ret
 
 .before_iterate:
 	mov rbx, rbp
-	mov rcx, rsi
+	mov rcx, [rsi - 1]
 
 .iterate:
 	mov rdx, [rbx + 4]
@@ -61,10 +61,13 @@ polynomial_degree:
 
 	inc rax
 	dec rsi
-	mov rcx rsi
+	mov rcx, [rsi - 1]
 	add esp, 4
 	jmp .check_single
 
-.ret_single_element:
+.ret_single_element_before:
 	ret
 
+.ret_single_element:
+	add esp, 4
+	ret
