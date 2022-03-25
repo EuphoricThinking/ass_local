@@ -13,8 +13,6 @@ polynomial_degree:
 	add rbx, 4
 	loop .check_zero_poly
 
-.ret_zero_poly:
-	mov rax, 0x1
 	ret
 
 
