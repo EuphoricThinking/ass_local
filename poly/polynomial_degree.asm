@@ -9,7 +9,7 @@ polynomial_degree:
 	xor rdx, rdx
 	mov rdx, [rbx + 4]
 
-	cmp rdx, 0
+	cmp edx, 0x0
 	jz .ret_zero_poly
 	jnz .ret_non_zero_poly
 
