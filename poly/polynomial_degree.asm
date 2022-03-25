@@ -6,23 +6,11 @@ polynomial_degree:
 	mov rbx, rdi
 	mov rcx, rsi
 	mov rax, 0xFFFFFFFF
-	xor rdx, rdx
-	mov rdx, [rbx + 4]
-
-	cmp edx, 0x0
-	jz .ret_zero_poly
-	jnz .ret_non_zero_poly
-
-	je .ret_zero_poly
-	jne .ret_non_zero_poly
-
-	test rdx, rdx
-	jnz .ret_zero_poly
 
 .check_zero_poly:
 	mov rdx, [rbx]
-	test rdx, rdx
-	jnz .ret_zero_poly
+	test edx, edx
+	jnz .ret_non_zero_poly
 	add rbx, 4
 	loop .check_zero_poly
 
