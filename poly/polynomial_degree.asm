@@ -6,10 +6,10 @@ polynomial_degree:
 	mov rcx, rsi
 	mov rax, 0xFFFFFFFF
 
-.check_zero_poly:
+.check_zero_init:
 	mov rdx, [rbx]
 	test edx, edx
-	jnz .ret_non_zero_poly
+	jnz .before_first_iteration
 	add rbx, 4
 	loop .check_zero_poly
 
@@ -18,5 +18,20 @@ polynomial_degree:
 	ret
 
 
-.ret_non_zero_poly:
+.before_first_iteration:
+	inc rax
+	cmp rsi, 0x1
+	je .ret_single_element
+	mov rcx, [rsi - 1]
+	mov rbx, rdi
+
+.first_iteration:
+	mov rdx, [rbx + 4]
+	sub edx, [ebx]
+	push edx
+	add rbx, 4
+	dec rcx
+	jnz .first_iteration
+
+.ret_single_element:
 	ret
