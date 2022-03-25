@@ -53,7 +53,7 @@ polynomial_degree:
 	mov rcx, [rsi - 1]
 
 .iterate:
-	mov rdx, [rbx + 4]
+	mov rdx, [rbx - 4]
 	sub edx, [ebx]
 	mov dword [ebx], edx
 	sub rbx, 4
@@ -61,7 +61,8 @@ polynomial_degree:
 
 	inc rax
 	dec rsi
-	mov rcx, [rsi - 1]
+	mov rcx, rsi
+	mov rbx, rbp
 	add esp, 4
 	jmp .check_single
 
