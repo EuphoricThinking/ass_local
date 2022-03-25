@@ -11,9 +11,9 @@ void printout(const int* tab, size_t len) {
 }
 
 int main() {
-//	const int poly[] = {-9, 0, 9, 18, 27};
+	const int poly[] = {-9, 0, 9, 18, 27};
 //	const int degree = 1;
-//	size_t size_ = 5;
+	size_t size_ = 5;
 
 //	const int poly[] = {1, 4, 9, 16, 25, 36, 49, 64, 81};
 //	const int degree = 2;
@@ -42,8 +42,8 @@ int main() {
 //	int const poly[] = {-1, 1, -1, 1, -1, 1, -1, 1, -1, 1};
 //	size_t size_ = 10;
 
-	int const poly[] = {39, 39};
-	size_t size_ = 2;
+//	int const poly[] = {39, 39};
+//	size_t size_ = 2;
 
 	printf("%d\n", polynomial_degree(poly, size_));
 //	printout(poly, size_);
