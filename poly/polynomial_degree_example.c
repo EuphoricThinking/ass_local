@@ -4,7 +4,7 @@
 int polynomial_degree(int const* y, size_t n);
 
 int main() {
-	int const me[2];
+	int const me[2] = {0, 0};
 	printf("%d\n", polynomial_degree(me, 2));
 
 	return 0;
