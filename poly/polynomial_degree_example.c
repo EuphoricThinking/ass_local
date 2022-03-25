@@ -3,6 +3,13 @@
 
 int polynomial_degree(int const* y, size_t n);
 
+void printout(const int* tab, size_t len) {
+	for(int i = 0; i < (int)len; i++) {
+		printf("%d ", tab[i]);
+	}
+	printf("\n");
+}
+
 int main() {
 //	const int poly[] = {-9, 0, 9, 18, 27};
 //	const int degree = 1;
@@ -32,7 +39,12 @@ int main() {
 //	const int degree = -1;
 	size_t size_ = 7;
 
+//	int const poly[] = {-1, 1, -1, 1, -1, 1, -1, 1, -1, 1};
+//	size_t size_ = 10;
+
 	printf("%d\n", polynomial_degree(poly, size_));
+	printout(poly, size_);
+
 
 	return 0;
 }

@@ -25,16 +25,19 @@ polynomial_degree:
 	mov rbx, rdi
 
 .first_iteration:
-	mov rdx, [rbx + 8]
+	mov rdx, [rbx + 4]
 	sub rdx, [rbx]
 	push rdx
-	add rbx, 8
+	add rbx, 4
 	loop .first_iteration
 
 	dec rsi
 	mov rcx, rsi
 	dec rcx
 	mov rbx, rsp
+	
+	mov dword [rdi], eax
+	lea rdi, [rdi + 4]
 
 
 .check_single:
@@ -43,7 +46,7 @@ polynomial_degree:
 
 .check_zero_stack:
 	mov rdx, [rbx]
-	test rdx, rdx
+	test edx, edx
 	jnz .before_iterate
 	add rbx, 8
 	loop .check_zero_stack
@@ -71,6 +74,10 @@ polynomial_degree:
 	mov rcx, rsi
 	add rsp, 8
 	mov rbx, rsp
+	
+	mov dword [rdi], eax
+	lea rdi, [rdi + 4]
+	
 	jmp .check_single
 
 .ret_single_element_before:
@@ -78,4 +85,5 @@ polynomial_degree:
 
 .ret_single_element:
 	add rsp, 8
+	inc rax
 	ret
