@@ -36,15 +36,34 @@ polynomial_degree:
 	mov rcx, rsi
 
 .check_single:
-	cmp rcx, 0x1
+	cmp rsi, 0x1
 	je .ret_single_element
 
 .check_zero_stack:
 	mov rdx, [rbx]
 	test edx, edx
-	jnz .iterate
+	jnz .before_iterate
 	add rbx, 4
 	loop .check_zero_stack
+
+	ret
+
+.before_iterate:
+	mov rbx, rbp
+	mov rcx, rsi
+
+.iterate:
+	mov rdx, [rbx + 4]
+	sub edx, [ebx]
+	mov dword [ebx], edx
+	add rbx, 4
+	dec rcx
+	jnz .iterate
+
+	dec rsi
+	mov rcx rsi
+	add esp, 4
+	jmp .check_single
 
 .ret_single_element:
 	ret
