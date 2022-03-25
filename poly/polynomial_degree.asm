@@ -1,6 +1,5 @@
 global polynomial_degree
 
-
 align 16
 polynomial_degree:
 	mov rbx, rdi
