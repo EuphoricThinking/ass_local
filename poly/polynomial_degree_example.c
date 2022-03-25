@@ -43,7 +43,7 @@ int main() {
 //	size_t size_ = 10;
 
 	printf("%d\n", polynomial_degree(poly, size_));
-	printout(poly, size_);
+//	printout(poly, size_);
 
 
 	return 0;

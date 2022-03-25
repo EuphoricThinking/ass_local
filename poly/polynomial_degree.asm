@@ -35,9 +35,6 @@ polynomial_degree:
 	mov rcx, rsi
 	dec rcx
 	mov rbx, rsp
-	
-	mov dword [rdi], eax
-	lea rdi, [rdi + 4]
 
 
 .check_single:
@@ -73,11 +70,7 @@ polynomial_degree:
 	dec rsi
 	mov rcx, rsi
 	add rsp, 8
-	mov rbx, rsp
-	
-	mov dword [rdi], eax
-	lea rdi, [rdi + 4]
-	
+	mov rbx, rsp	
 	jmp .check_single
 
 .ret_single_element_before:
