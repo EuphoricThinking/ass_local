@@ -2,12 +2,12 @@ global delay
 
 align 16
 delay:
-	cmp edi, 0x0
-	jz .exit
+	mov rcx, rdi
+	jrcxz .exit
 
-.loop:
-	sub rdi, 0x1
-	jnz .loop
+.looptop:
+	loop .looptop
+
 
 .exit:
 	rdtsc
