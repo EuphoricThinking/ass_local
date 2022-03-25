@@ -48,7 +48,6 @@ polynomial_degree:
 	add rbx, 8
 	loop .check_zero_stack
 
-	mov rax, 2
 	lea rdx, [rsi*8]
 	add rsp, rdx
 	ret
