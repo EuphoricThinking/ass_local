@@ -26,14 +26,16 @@ polynomial_degree:
 
 .first_iteration:
 	mov rdx, [rbx + 4]
-	sub edx, [ebx]
+	sub rdx, [rbx]
+	ret
 	push rdx
 	add rbx, 4
 	loop .first_iteration
 
 	mov rbx, rbp
 	dec rsi
-	mov rcx, [rsi - 1]
+	mov rcx, rsi
+	dec rcx
 
 .check_single:
 	cmp rsi, 0x1
@@ -51,7 +53,8 @@ polynomial_degree:
 
 .before_iterate:
 	mov rbx, rbp
-	mov rcx, [rsi - 1]
+	mov rcx, rsi
+	dec rcx
 
 .iterate:
 	mov rdx, [rbx - 4]
