@@ -27,9 +27,9 @@ int main() {
 //	const int degree = 0;
 //	size_t size_ = 9;
 
-	const int poly[] = {0};
+//	const int poly[] = {0};
 //	const int degree = -1;
-	size_t size_ = 1;
+//	size_t size_ = 1;
 
 //	const int poly[] = {0, 0, 0, 0};
 //	const int degree = -1;
@@ -41,6 +41,9 @@ int main() {
 
 //	int const poly[] = {-1, 1, -1, 1, -1, 1, -1, 1, -1, 1};
 //	size_t size_ = 10;
+
+	int const poly[] = {39, 39};
+	size_t size_ = 2;
 
 	printf("%d\n", polynomial_degree(poly, size_));
 //	printout(poly, size_);

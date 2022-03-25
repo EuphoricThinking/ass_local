@@ -39,6 +39,12 @@ polynomial_degree:
 
 .check_zero_stack:
 	mov rdx, [rbx]
+	
+	mov rax, rcx
+	lea rdx, [rsi*8]
+	add rsp, rdx
+	ret
+	
 	test edx, edx
 	jnz .check_single
 	add rbx, 8
@@ -78,5 +84,5 @@ polynomial_degree:
 
 .ret_single_element:
 	add rsp, 8
-	inc rax
+	inc rax		
 	ret
