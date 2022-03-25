@@ -10,7 +10,7 @@ polynomial_degree:
 	mov rdx, [rbx]
 	test rdx, rdx
 	jnz .ret_non_zero_poly
-	lea rbx, [rbx + 4]
+	mov rbx, [rbx + 4]
 	loop .check_zero_poly
 
 .ret_zero:
