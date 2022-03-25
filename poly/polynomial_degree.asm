@@ -77,5 +77,6 @@ polynomial_degree:
 	ret
 
 .ret_single_element:
+	mov rax, [rsp]
 	add rsp, 8
 	ret
