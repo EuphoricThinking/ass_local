@@ -26,7 +26,7 @@ polynomial_degree:
 .first_iteration:
 	mov rdx, [rbx + 4]
 	sub edx, [ebx]
-	push edx
+	push rdx
 	add rbx, 4
 	loop .first_iteration
 
