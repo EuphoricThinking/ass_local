@@ -2,7 +2,6 @@ global polynomial_degree
 
 align 16
 polynomial_degree:
-	push rbx
 	mov rbx, rdi
 	mov rcx, rsi
 	mov rax, 0xFFFFFFFF
@@ -15,11 +14,9 @@ polynomial_degree:
 	loop .check_zero_poly
 
 .ret_zero_poly:
-	pop rbx
 	mov rax, 0x1
 	ret
 
 
 .ret_non_zero_poly:
-	pop rbx
 	ret
