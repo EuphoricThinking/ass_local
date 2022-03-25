@@ -59,8 +59,8 @@ polynomial_degree:
 
 .iterate:
 	mov rdx, [rbx - 8]
-	sub edx, [ebx]
-	mov dword [ebx], edx
+	sub rdx, [rbx]
+	mov qword [rbx], rdx
 	sub rbx, 8
 	loop .iterate
 
@@ -68,12 +68,12 @@ polynomial_degree:
 	dec rsi
 	mov rcx, rsi
 	mov rbx, rbp
-	add esp, 8
+	add rsp, 8
 	jmp .check_single
 
 .ret_single_element_before:
 	ret
 
 .ret_single_element:
-	add esp, 8
+	add rsp, 8
 	ret
