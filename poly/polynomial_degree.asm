@@ -33,5 +33,21 @@ polynomial_degree:
 	dec rcx
 	jnz .first_iteration
 
+	mov rbx, rbp
+	dec rsi
+	mov rcx, rsi
+
+.check_single:
+	cmp rcx, 0x1
+	je .ret_single_element
+
+.check_zero_stack:
+	mov rdx, [rbx]
+	test edx, edx
+	jnz .iterate
+	add rbx, 4
+	loop .check_zero_stack
+
 .ret_single_element:
 	ret
+
