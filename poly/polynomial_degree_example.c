@@ -4,35 +4,35 @@
 int polynomial_degree(int const* y, size_t n);
 
 int main() {
-/*	const int poly0[] = {-9, 0, 9, 18, 27};
-//	const int degree0 = 1;
-	size_t size_0 = 5;
+//	const int poly[] = {-9, 0, 9, 18, 27};
+//	const int degree = 1;
+//	size_t size_ = 5;
 
-	const int poly1[] = {1, 4, 9, 16, 25, 36, 49, 64, 81};
-//	const int degree1 = 2;
-	size_t size_1 = 9;
+//	const int poly[] = {1, 4, 9, 16, 25, 36, 49, 64, 81};
+//	const int degree = 2;
+//	size_t size_ = 9;
 
-	const int poly2[] = {777};
-//	const int degree2 = 0;
-	size_t size_2 = 1;
-*/
-	const int poly3[] = {5, 5};
-//	const int degree3 = 0;
-	size_t size_3 = 2;
+//	const int poly[] = {777};
+//	const int degree = 0;
+//	size_t size_ = 1;
 
-/*	const int poly4[] = {0};
-//	const int degree4 = -1;
-	size_t size_4 = 1;
+	const int poly[] = {5, 5, 5, 5};
+//	const int degree = 0;
+	size_t size_ = 4;
 
-	const int poly5[] = {0, 0, 0, 0};
-//	const int degree5 = -1;
-	size_t size_5 = 4;
+//	const int poly[] = {0};
+//	const int degree = -1;
+//	size_t size_ = 1;
 
-	int const poly6[5] = {0};
-//	const int degree6 = -1;
-	size_t size_6 = 1; */
+//	const int poly[] = {0, 0, 0, 0};
+//	const int degree = -1;
+//	size_t size_ = 4;
 
-	printf("%d\n", polynomial_degree(poly3, size_3));
+//	int const poly[5] = {0};
+//	const int degree = -1;
+//	size_t size_ = 1;
+
+	printf("%d\n", polynomial_degree(poly, size_));
 
 	return 0;
 }
