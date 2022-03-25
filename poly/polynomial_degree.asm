@@ -53,8 +53,13 @@ polynomial_degree:
 	ret
 
 .before_iterate:
-	lea rdx, [rsp + 8*rsi]
+	lea rdx, [rsp + 8*(rsi - 1)]
 	mov rbx, rdx
+	
+	mov rax, [rbx]
+	lea rdx, [8*rsi]
+	add rsp, rdx
+	ret
 	
 	mov rcx, rsi
 	dec rcx
