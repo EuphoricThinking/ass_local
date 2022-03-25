@@ -33,18 +33,11 @@ polynomial_degree:
 
 	dec rsi
 	mov rcx, rsi
-	dec rcx
 	mov rbx, rsp
 
 
 .check_zero_stack:
-	mov rdx, [rbx]
-	
-	mov rax, rcx
-	lea rdx, [rsi*8]
-	add rsp, rdx
-	ret
-	
+	mov rdx, [rbx]		
 	test edx, edx
 	jnz .check_single
 	add rbx, 8
