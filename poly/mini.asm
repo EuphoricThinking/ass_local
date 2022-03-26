@@ -1,6 +1,13 @@
 global polynomial_degree
 
 polynomial_degree:
+	mov rsi, 64
+	neg rsi
+	mov rax, 2
+	lea rbx, [8 + 2*rsi]
+	mov rax, rbx
+	ret
+
 	movsxd rdx, [rdi]
 	xor rdx, rdx
 	mov rax, rdx
