@@ -1,6 +1,12 @@
 global polynomial_degree
 
 polynomial_degree:
+	mov rax, 6
+	sub rax, 32
+	add rax, 63
+	shr rax, 6
+	ret
+
 	mov rsi, 64
 	neg rsi
 	mov rax, 2
