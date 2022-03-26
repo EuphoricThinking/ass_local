@@ -2,6 +2,13 @@ global polynomial_degree
 
 align 16
 polynomial_degree:
+	sub esp, 4
+	mov [esp], [edi]
+	mov rax, [rsp]
+	add rsp, 4
+	ret
+
+
 	push rbx
 	mov rbx, rdi
 	mov rcx, rsi ;movsxd?
