@@ -4,7 +4,7 @@ align 16
 polynomial_degree:
 	push rbx
 	mov rbx, rdi
-	mov rcx, rsi
+	mov rcx, rsi ;movsxd?
 	mov rax, -1
 
 	mov r8, rcx ;additional storage - in bytes
@@ -35,7 +35,7 @@ polynomial_degree:
 
 .before_first_iteration:
 	inc rax
-	cmp rsi, 0x1
+	cmp rsi, 1
 	je .ret_single_element_before
 
 	mov r9, rsi  ;po ilu liczbach przejdziemy
@@ -54,7 +54,7 @@ polynomial_degree:
 	push rdx
 	add rbx, 4
 
-	test rcx, rcx
+	test rcx, rcx ;czy mamy komórki do dokończenia
 	jz .after_push
 
 .pad_with_zeros:
@@ -69,7 +69,7 @@ polynomial_degree:
 	jnz .push_and_calculate
 
 	dec rsi
-	lea rcx, [rsi*(8 + 8*r10)]
+	lea rcx, [rsi*(8 + 8*r10)]  ;ile komórek oraz zarezerwowanych już liczb musmiy przejsc, zeby sprawdzic zero
 	mov rcx, [rcx]
 
 	mov rbx, rsp
@@ -125,7 +125,10 @@ polynomial_degree:
 
 	inc rax
 	dec rsi
-	mov r9, rsi
+
+	lea rcx, [rsi*(8
+;	mov rcx, rsi
+
 	add rsp, 8
 	add rsp, r8
 	mov rbx, rsp
