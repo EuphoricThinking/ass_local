@@ -71,18 +71,32 @@ polynomial_degree:
 	test rdx, rdx
 	jnz .check_single
 
-	test r8, r8
-	jz .after_zero_check
+	dec rcx
+	jz .check_zero_stack
 
-.check_zero_cells:
-	
-.after_zero_check:
-	loop .check_zero_stack
+	dec r9
+	cmp r9, 0
+	jg .check_zero_stack
 
 	leave
 	pop rbx
 	ret
 
+.check_single:
+	cmp rsi, 1
+	je .ret_single_stack
+
+	mov rcx, rsi
+	dec rcx
+
+	mov r9, r8
+
 .ret_single_input:
+	ret
+
+.ret_single_stack:
+	leave
+	pop rbx
+	inc rax
 	ret
 
