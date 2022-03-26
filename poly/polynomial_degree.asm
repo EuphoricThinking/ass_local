@@ -5,7 +5,6 @@ polynomial_degree:
 	push rbx
 	mov rbx, rdi
 	mov rcx, rsi
-;	mov rax, 0xFFFFFFFF
 	mov rax, -1
 
 .check_zero_init:
@@ -29,8 +28,6 @@ polynomial_degree:
 
 .first_iteration:
 	mov rdx, [rbx + 4]
-
-;	movsxd rdx, [rbx + 4]
 	movsxd rdx, edx
 
 	sub rdx, [rbx]
@@ -44,7 +41,7 @@ polynomial_degree:
 
 
 .check_zero_stack:
-	mov rdx, [rbx]		
+	mov rdx, [rbx]
 	test edx, edx
 	jnz .check_single
 	add rbx, 8
@@ -54,15 +51,15 @@ polynomial_degree:
 	add rsp, rdx
 	pop rbx
 	ret
-	
+
 .check_single:
 	cmp rsi, 0x1
 	je .ret_single_element
-	
+
 .before_iterate:
 	lea rdx, [rsp + 8*(rsi - 1)]
 	mov rbx, rdx
-	
+
 	mov rcx, rsi
 	dec rcx
 
@@ -77,7 +74,7 @@ polynomial_degree:
 	dec rsi
 	mov rcx, rsi
 	add rsp, 8
-	mov rbx, rsp	
+	mov rbx, rsp
 	jmp .check_zero_stack
 
 .ret_single_element_before:
@@ -87,5 +84,5 @@ polynomial_degree:
 .ret_single_element:
 	add rsp, 8
 	inc rax
-	pop rbx		
+	pop rbx
 	ret
