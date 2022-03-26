@@ -10,8 +10,6 @@ INT_BYTESIZE equ 4
 REGISTER_BYTESIZE equ 8
 
 polynomial_degree:
-	mov rax, 1
-
 	mov rax, -1
 	mov rcx, rsi
 
@@ -22,10 +20,11 @@ polynomial_degree:
 	sub r8, AVAILABLE_HALF ;część zmieści się w rejestrze ze zwykłym intem
 	add r8, BIAS
 	shr r8, REGISTER_EXPONENT
+	neg r8
 
 .check_zero_first:
 	mov rdx, [rbx]
-	add rbx, INT_BYTESIZE
+	add rbx, 4
 	test edx, edx
 	jnz .preparation
 	loop .check_zero_first
@@ -45,10 +44,10 @@ polynomial_degree:
 	mov r9, r8 ;iterujemy po komórkach
 
 .push_init:
-	movsxd rdx, [rdi + INT_BYTESIZE]
+	movsxd rdx, [rdi + 4]
 	sub rdx, [rdi]
 	push rdx
-	add rdi, INT_BYTESIZE
+	add rdi, 4
 
 	test r8, r8
 	jz .push_init_after
@@ -56,7 +55,7 @@ polynomial_degree:
 .push_zeros:
 	xor rdx, rdx
 	push rdx
-	dec r9
+	inc r9
 	jnz .push_zeros
 
 	mov r9, r8  ;restore counter for cells
@@ -69,11 +68,11 @@ polynomial_degree:
 
 	push rbp
 	mov rbp, rsp
-	mov rbx, rsp
+	lea rbx, [rbp - 8]
 
 .check_zero_stack:
 	mov rdx, [rbx]
-	add rbx, 8
+	sub rbx, 8
 
 	test rdx, rdx
 	jnz .check_single
@@ -81,9 +80,9 @@ polynomial_degree:
 	dec rcx
 	jz .check_zero_stack
 
-	dec r9
+	inc r9
 	cmp r9, 0
-	jg .check_zero_stack
+	jl .check_zero_stack
 
 	leave
 	pop rbx
@@ -100,7 +99,7 @@ polynomial_degree:
 	lea rbx, [rbp - 8] ;first element
 
 .subtract_first_cell:
-	mov rdx, [rbx + 8 + 8*r8] ;next number
+	mov rdx, [rbx - 8 + 8*r8] ;next number
 	sub rdx, [rbx]
 	mov qword [rbx], rdx
 	sub rbx, 8
@@ -109,11 +108,11 @@ polynomial_degree:
 	jz .after_subtract
 
 .subtract_inner_cells:
-	lea rdx, [rbx - 8 + 8*r8]
-	mov rdx, [rbx - 8 - 8*r8] ;the cell of a next number
+	mov rdx, [rbx - 8 + 8*r8] ;the cell of a next number
 	sbb rdx, [rbx]
 	mov qword [rbx], rdx
-	sub rbx, 8
+	;sub rbx, 8
+	lea rbx, [rbx - 8]
 
 	dec r9
 	jnz .subtract_inner_cells
