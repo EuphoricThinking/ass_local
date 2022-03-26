@@ -44,9 +44,6 @@ polynomial_degree:
 
 	mov r9, r8 ;iterujemy po komórkach
 
-	push rbp
-	mov rbp, rsp
-
 .push_init:
 	movsxd rdx, [rdi + INT_BYTESIZE]
 	sub rdx, [rdi]
@@ -70,11 +67,13 @@ polynomial_degree:
 	dec rsi
 	mov rcx, rsi
 
-	lea rbx, [rbp - 8] ;the first value
+	push rbp
+	mov rbp, rsp
+	mov rbx, rsp
 
 .check_zero_stack:
 	mov rdx, [rbx]
-	sub rbx, 8
+	add rbx, 8
 
 	test rdx, rdx
 	jnz .check_single
@@ -82,7 +81,7 @@ polynomial_degree:
 	dec rcx
 	jz .check_zero_stack
 
-	sub r9, REGISTER_BITSIZE_POS
+	dec r9
 	cmp r9, 0
 	jg .check_zero_stack
 
