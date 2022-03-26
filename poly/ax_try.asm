@@ -36,6 +36,10 @@ polynomial_degree:
 
 	mov r9, r8 ;iterujemy po komórkach
 
+	push rbx
+	push rbp
+	mov rbp, rsp
+
 .push_init:
 	movsxd rdx, [rdi + 4]
 	sub rdx, [rdi]
@@ -59,14 +63,11 @@ polynomial_degree:
 	dec rsi
 	mov rcx, rsi
 
-	push rbx
-	push rbp
-	mov rbp, rsp
-	mov rbx, rsp
+	lea rbx, [rbp - 8] ;the first value
 
 .check_zero_stack:
 	mov rdx, [rbx]
-	add rbx, 8
+	sub rbx, 8
 
 	test rdx, rdx
 	jnz .check_single
@@ -87,9 +88,37 @@ polynomial_degree:
 	je .ret_single_stack
 
 	mov rcx, rsi
-	dec rcx
+	dec rcx ;how many iterations over numbers
 
-	mov r9, r8
+	mov r9, r8 ;how many cell iterations
+	lea rbx, [rbp - 8] ;first element
+
+.subtract_first_cell:
+	mov rdx, [rbx - 8 - 8*r8] ;next number
+	sub rdx, [rbx]
+	mov qword [rbx], rdx
+	sub rbx, 8
+
+	test r8, r8
+	jz .after_subtract
+
+.subtract_inner_cells:
+	mov rdx, [rbx - 8 - 8*r8] ;the cell of a next number
+	sbb rdx, [rbx]
+	mov qword [rbx], rdx
+	sub rbx, 8
+
+	dec r9
+	jnz .subtract_inner_cells
+
+.after_subtract:
+	loop .subtract_first_cell
+
+	dec rsi
+	mov rcx, rsi
+
+	lea rbx, [rbp - 8]
+	jmp .check_zero_stack
 
 .ret_single_input:
 	ret
@@ -99,4 +128,3 @@ polynomial_degree:
 	pop rbx
 	inc rax
 	ret
-
