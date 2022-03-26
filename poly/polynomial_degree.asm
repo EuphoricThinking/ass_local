@@ -2,9 +2,11 @@ global polynomial_degree
 
 align 16
 polynomial_degree:
+	push rbx
 	mov rbx, rdi
 	mov rcx, rsi
-	mov rax, 0xFFFFFFFF
+;	mov rax, 0xFFFFFFFF
+	mov rax, -1
 
 .check_zero_init:
 	mov rdx, [rbx]
@@ -13,6 +15,7 @@ polynomial_degree:
 	add rbx, 4
 	loop .check_zero_init
 
+	pop rbx
 	ret
 
 
@@ -26,6 +29,10 @@ polynomial_degree:
 
 .first_iteration:
 	mov rdx, [rbx + 4]
+
+;	movsxd rdx, [rbx + 4]
+	movsxd rdx, edx
+
 	sub rdx, [rbx]
 	push rdx
 	add rbx, 4
@@ -45,6 +52,7 @@ polynomial_degree:
 
 	lea rdx, [rsi*8]
 	add rsp, rdx
+	pop rbx
 	ret
 	
 .check_single:
@@ -73,9 +81,11 @@ polynomial_degree:
 	jmp .check_zero_stack
 
 .ret_single_element_before:
+	pop rbx
 	ret
 
 .ret_single_element:
 	add rsp, 8
-	inc rax		
+	inc rax
+	pop rbx		
 	ret

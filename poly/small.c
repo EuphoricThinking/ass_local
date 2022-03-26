@@ -1,4 +1,5 @@
 #include <assert.h>
+#include <stdio.h>
 
 int polynomial_degree(const int *y, int n);
 
@@ -23,6 +24,8 @@ int main() {
 	test(2, 0, {37, 37});
 	test(2, 0, {54, 54});
 	test(2, 0, {48, 48});
+	int const tab[] = {37, 37};
+	printf("odp: %d\n", polynomial_degree(tab, 2));
 	test(2, 0, {37, 37});
 	test(2, 0, {17, 17});
 	test(2, 0, {45, 45});
