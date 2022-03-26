@@ -11,8 +11,6 @@ REGISTER_BYTESIZE equ 8
 
 polynomial_degree:
 	mov rax, 1
-	sal rax, 6
-	ret
 
 	mov rax, -1
 	mov rcx, rsi
@@ -46,6 +44,9 @@ polynomial_degree:
 
 	mov r9, r8 ;iterujemy po komórkach
 
+	push rbp
+	mov rbp, rsp
+
 .push_init:
 	movsxd rdx, [rdi + INT_BYTESIZE]
 	sub rdx, [rdi]
@@ -69,7 +70,6 @@ polynomial_degree:
 	dec rsi
 	mov rcx, rsi
 
-	
 	lea rbx, [rbp - 8] ;the first value
 
 .check_zero_stack:
