@@ -69,7 +69,7 @@ polynomial_degree:
 	jnz .push_and_calculate
 
 	dec rsi
-	lea rcx, [rsi*(8 + 8*r10)]  ;ile komórek oraz zarezerwowanych już liczb musmiy przejsc, zeby sprawdzic zero
+	lea rcx, [rsi*(1 + r10)]  ;ile komórek oraz zarezerwowanych już liczb musmiy przejsc, zeby sprawdzic zero
 	mov rcx, [rcx]
 
 	mov rbx, rsp
