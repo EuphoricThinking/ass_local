@@ -1,30 +1,88 @@
 global polynomial_degree
 
+BIAS equ 63
+REGISTER_SIZE equ -64
+AVAILABLE_HALF equ 32
+
 polynomial_degree:
-	;We have to push 64-bite register at first
-	xor ax, ax
-	mov dx, 1
-	push ax
-	pop ax
-	sub ax, dx
+	mov rax, -1
+	mov rcx, rsi
+
+	mov r8, rsi
+	sub r8, AVAILABLE_HALF ;część zmieści się w rejestrze ze zwykłym intem
+	jns .not_enough
+	mov r8, 0
+	jmp .check_zero_first
+
+.not_enough:
+	add r8, BIAS
+	and r8, REGISTER_SIZE
+
+.check_zero_first:
+	mov rdx, [rdi]
+	test edx, edx
+	jnz .preparation
+	loop .check_zero_first
+
 	ret
-	js .left
-	jns .right
 
-.left:
-	mov rax, 2
-	jmp .here
+.preparation:
+	inc rax
+	cmp rsi, 1
+	je .ret_single_input
 
-.right:
-	mov rax, 8
+	mov rcx, rsi ;iterujemy po wszystkich liczbach
+	dec rcx
 
-.here:
+	mov r9, r8 ;iterujemy po komórkach
+
+.push_init:
+	movsxd rdx, [rdi + 4]
+	sub rdx, [rdi]
+	push rdx
+	add rdi, 4
+
+	test r8, r8
+	jz .push_init_after
+
+.push_zeros:
+	xor rdx, rdx
+	push rdx
+	dec r9
+	jnz .push_zeros
+
+	mov r9, r8  ;restore counter for cells
+
+.push_init_after:
+	loop .push_init
+
+	dec rsi
+	mov rcx, rsi
+
+	push rbx
+	push rbp
+	mov rbp, rsp
+	mov rbx, rsp
+
+.check_zero_stack:
+	mov rdx, [rbx]
+	add rbx, 8
+
+	test rdx, rdx
+	jnz .check_single
+
+	test r8, r8
+	jz .after_zero_check
+
+.check_zero_cells:
+	
+.after_zero_check:
+	loop .check_zero_stack
+
+	leave
+	pop rbx
 	ret
 
-
-	xor ax, ax
-	mov dx, 1
-	push ax
-	pop ax
-	sub ax, dx
+.ret_single_input:
 	ret
+
