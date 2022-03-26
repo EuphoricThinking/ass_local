@@ -1,38 +1,49 @@
 global polynomial_degree
 
 BIAS equ 63
-REGISTER_SIZE equ -64
+REGISTER_BITSIZE_NEG equ -64
+REGISTER_BITSIZE_POS equ 64
 AVAILABLE_HALF equ 32
+
+INT_BYTESIZE equ 4
+REGISTER_BYTESIZE equ 8
 
 polynomial_degree:
 	mov rax, -1
 	mov rcx, rsi
 
+	push rbx
+	mov rbx, rdi
+
 	mov r8, rsi
 	sub r8, AVAILABLE_HALF ;część zmieści się w rejestrze ze zwykłym intem
 	jns .not_enough
+
 	mov r8, 0
 	jmp .check_zero_first
 
 .not_enough:
 	add r8, BIAS
-	and r8, REGISTER_SIZE
+	and r8, REGISTER_BITSIZE_NEG
 
 .check_zero_first:
-	mov rdx, [rdi]
+	mov rdx, [rbx]
+	add rbx, INT_BYTESIZE
 	test edx, edx
 	jnz .preparation
 	loop .check_zero_first
 
+	pop rbx
 	ret
 
 .preparation:
 	inc rax
+
 	cmp rsi, 1
 	je .ret_single_input
 
 	mov rcx, rsi ;iterujemy po wszystkich liczbach
-	dec rcx
+	dec rcx   ;bez ostatniej
 
 	mov r9, r8 ;iterujemy po komórkach
 
@@ -121,6 +132,7 @@ polynomial_degree:
 	jmp .check_zero_stack
 
 .ret_single_input:
+	pop rbx
 	ret
 
 .ret_single_stack:
