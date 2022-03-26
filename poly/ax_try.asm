@@ -4,6 +4,7 @@ BIAS equ 63
 REGISTER_BITSIZE_NEG equ -64
 REGISTER_BITSIZE_POS equ 64
 AVAILABLE_HALF equ 32
+REGISTER_EXPONENT equ 6
 
 INT_BYTESIZE equ 4
 REGISTER_BYTESIZE equ 8
@@ -21,14 +22,8 @@ polynomial_degree:
 
 	mov r8, rsi
 	sub r8, AVAILABLE_HALF ;część zmieści się w rejestrze ze zwykłym intem
-	jns .not_enough
-
-	mov r8, 0
-	jmp .check_zero_first
-
-.not_enough:
 	add r8, BIAS
-	and r8, REGISTER_BITSIZE_NEG
+	shr r8, REGISTER_EXPONENT
 
 .check_zero_first:
 	mov rdx, [rbx]
@@ -63,7 +58,7 @@ polynomial_degree:
 .push_zeros:
 	xor rdx, rdx
 	push rdx
-	sub r9, REGISTER_BITSIZE_POS
+	dec r9
 	jnz .push_zeros
 
 	mov r9, r8  ;restore counter for cells
