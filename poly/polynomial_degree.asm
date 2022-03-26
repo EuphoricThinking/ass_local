@@ -6,6 +6,13 @@ polynomial_degree:
 	mov rbx, rdi
 	mov rcx, rsi
 	mov rax, -1
+	mov r8, rcx
+	add r8, 7
+	and r8, -16
+	mov rax, r8
+	pop rbx
+	ret
+
 
 .check_zero_init:
 	mov rdx, [rbx]
