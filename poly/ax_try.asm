@@ -37,14 +37,16 @@ polynomial_degree:
 	dec rcx   ;bez ostatniej
 
 	mov r9, r8 ;iterujemy po komórkach
+	
+	push rbp
+	mov rbp, rsp
 
 .push_init:
 	movsxd rdx, [rdi + 4]
 	sub rdx, [rdi]
 	push rdx
-	add rdi, 4
-
-	test r8, r8
+	add rdi, 4	
+	test r8, r8	
 	jz .push_init_after
 
 .push_zeros:
@@ -61,8 +63,6 @@ polynomial_degree:
 	dec rsi
 	mov rcx, rsi
 
-	push rbp
-	mov rbp, rsp
 	lea rbx, [rbp - 8]
 
 .check_zero_stack:
