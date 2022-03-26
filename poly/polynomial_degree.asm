@@ -37,8 +37,14 @@ polynomial_degree:
 	inc rax
 	cmp rsi, 0x1
 	je .ret_single_element_before
-	mov rcx, rsi
-	dec rcx
+
+	mov r9, rsi  ;po ilu liczbach przejdziemy
+	dec r9
+	mov rcx, r10 ;licznik, po ilu komórkach liczby przejdziemy
+
+;	lea rcx, [(r10 + 8)*rsi]
+;	mov rcx, [rcx]
+
 	mov rbx, rdi
 
 .push_and_calculate:
@@ -47,12 +53,25 @@ polynomial_degree:
 	sub rdx, [rbx]
 	push rdx
 	add rbx, 4
-	sub rsp, r8
 
-	loop .push_and_calculate
+	test rcx, rcx
+	jz .after_push
+
+.pad_with_zeros:
+	xor rdx, rdx
+	push rdx
+	loop .pad_with_zeros
+	mov rcx, r10
+
+.after_push:
+        dec r9
+	test r9, r9
+	jnz .push_and_calculate
 
 	dec rsi
-	mov r9, rsi
+	lea rcx, [rsi*(8 + 8*r10)]
+	mov rcx, [rcx]
+
 	mov rbx, rsp
 
 
@@ -63,7 +82,7 @@ polynomial_degree:
 	add rbx, 8
 	loop .check_zero_stack
 
-	lea rdx, [rsi*(8 + r8)]
+	lea rdx, [rsi*(8 + 8*r10)]
 	add rsp, [rdx] ;prawdopodobnie powinien występować tutaj adres
 	pop rbx
 	ret
@@ -73,7 +92,7 @@ polynomial_degree:
 	je .ret_single_element
 
 .before_iterate:
-	lea rdx, [rsp + (8 + r8)*(rsi - 1)] ;od pierwszego elementu, żeby łatwiej dodawać na stos
+	lea rdx, [rsp + (8 + 8*r10)*(rsi - 1)] ;od pierwszego elementu, żeby łatwiej dodawać na stos
 	mov rbx, rdx
 
 	mov r9, rsi ;licznik iteracji po liczbach - po ilu liczbach przeszliśmy
@@ -117,7 +136,8 @@ polynomial_degree:
 	ret
 
 .ret_single_element:
-	add rsp, 8
+	lea rdx, [8 + 8*r10]
+	add rsp, [rdx]
 	inc rax
 	pop rbx
 	ret
