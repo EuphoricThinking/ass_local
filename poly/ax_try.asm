@@ -51,15 +51,11 @@ polynomial_degree:
 
 	mov r9, r8 ;iterujemy po komórkach
 
-	push rbx
-	push rbp
-	mov rbp, rsp
-
 .push_init:
-	movsxd rdx, [rdi + 4]
+	movsxd rdx, [rdi + INT_BYTESIZE]
 	sub rdx, [rdi]
 	push rdx
-	add rdi, 4
+	add rdi, INT_BYTESIZE
 
 	test r8, r8
 	jz .push_init_after
@@ -67,7 +63,7 @@ polynomial_degree:
 .push_zeros:
 	xor rdx, rdx
 	push rdx
-	dec r9
+	sub r9, REGISTER_BITSIZE_POS
 	jnz .push_zeros
 
 	mov r9, r8  ;restore counter for cells
@@ -78,6 +74,7 @@ polynomial_degree:
 	dec rsi
 	mov rcx, rsi
 
+	
 	lea rbx, [rbp - 8] ;the first value
 
 .check_zero_stack:
@@ -90,7 +87,7 @@ polynomial_degree:
 	dec rcx
 	jz .check_zero_stack
 
-	dec r9
+	sub r9, REGISTER_BITSIZE_POS
 	cmp r9, 0
 	jg .check_zero_stack
 
@@ -109,7 +106,7 @@ polynomial_degree:
 	lea rbx, [rbp - 8] ;first element
 
 .subtract_first_cell:
-	mov rdx, [rbx - 8 - 8*r8] ;next number
+	mov rdx, [rbx + 8 + 8*r8] ;next number
 	sub rdx, [rbx]
 	mov qword [rbx], rdx
 	sub rbx, 8
