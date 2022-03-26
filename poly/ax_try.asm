@@ -1,13 +1,8 @@
 global polynomial_degree
 
 BIAS equ 63
-REGISTER_BITSIZE_NEG equ -64
-REGISTER_BITSIZE_POS equ 64
 AVAILABLE_HALF equ 32
 REGISTER_EXPONENT equ 6
-
-INT_BYTESIZE equ 4
-REGISTER_BYTESIZE equ 8
 
 polynomial_degree:
 	mov rax, -1
@@ -102,7 +97,7 @@ polynomial_degree:
 	mov rdx, [rbx - 8 + 8*r8] ;next number
 	sub rdx, [rbx]
 	mov qword [rbx], rdx
-	sub rbx, 8
+	lea rbx, [rbx - 8]
 
 	test r8, r8
 	jz .after_subtract
@@ -114,8 +109,10 @@ polynomial_degree:
 	;sub rbx, 8
 	lea rbx, [rbx - 8]
 
-	dec r9
+	inc r9
 	jnz .subtract_inner_cells
+
+	mov r9, r8
 
 .after_subtract:
 	loop .subtract_first_cell
