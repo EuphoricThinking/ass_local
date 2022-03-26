@@ -9,6 +9,10 @@ INT_BYTESIZE equ 4
 REGISTER_BYTESIZE equ 8
 
 polynomial_degree:
+	mov rax, 1
+	sal rax, 6
+	ret
+
 	mov rax, -1
 	mov rcx, rsi
 
@@ -114,6 +118,7 @@ polynomial_degree:
 	jz .after_subtract
 
 .subtract_inner_cells:
+	lea rdx, [rbx - 8 + 8*r8]
 	mov rdx, [rbx - 8 - 8*r8] ;the cell of a next number
 	sbb rdx, [rbx]
 	mov qword [rbx], rdx
