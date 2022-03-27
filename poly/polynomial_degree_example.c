@@ -23,9 +23,9 @@ int main() {
 //	const int degree = 0;
 //	size_t size_ = 1;
 
-	const int poly[] = {5, 5, 5, 5, 5, 5, 5, 5, 5};
+//	const int poly[] = {5, 5, 5, 5, 5, 5, 5, 5, 5};
 //	const int degree = 0;
-	size_t size_ = 9;
+//	size_t size_ = 9;
 
 //	const int poly[] = {0};
 //	const int degree = -1;
@@ -42,8 +42,8 @@ int main() {
 //	int const poly[] = {-1, 1, -1, 1, -1, 1, -1, 1, -1, 1};
 //	size_t size_ = 10;
 
-//	int const poly[] = {37, 37};
-//	size_t size_ = 2;
+	int const poly[] = {37, 37};
+	size_t size_ = 2;
 
 //	int const poly[] = {2, 5, 10, 17, 26};
 //	size_t size_ = 5;
