@@ -81,13 +81,15 @@ polynomial_degree:
 	lea rbx, [rbp - 8]
 
 .check_zero_stack:
+
+.check_cells:
 	mov rdx, [rbx]
 	sub rbx, 8
 
 	test rdx, rdx
 	jnz .check_single
 
-	test r8, r8
+	inc r9
 	jnz .check_inner_cells
 	jz .check_after
 
@@ -100,9 +102,10 @@ polynomial_degree:
 	inc r9
 	jnz .check_inner_cells
 
-	mov r9, r8
+;	mov r9, r8
 
 .check_after:
+	mov r9, r8
 	loop .check_zero_stack
 
 	leave
