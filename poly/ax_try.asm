@@ -54,11 +54,21 @@ polynomial_degree:
 	test r8, r8
 	jz .push_init_after
 
-.push_zeros:
-	xor rdx, rdx
-	push rdx
+.push_fillers:
+	cmp rdx, 0
+	jge .add_positive
+
+.add_negative:
+	mov rbx, -1
+	jmp .push_fillers_after
+
+.add_positive:
+	mov rbx, 0
+
+.push_fillers_after:
+	push rbx
 	inc r9
-	jnz .push_zeros
+	jnz .push_fillers
 
 	mov r9, r8  ;restore counter for cells
 
@@ -76,7 +86,7 @@ polynomial_degree:
 
 	test rdx, rdx
 	jnz .check_single
-	
+
 	dec rcx
 	jnz .check_zero_stack
 
