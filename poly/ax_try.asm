@@ -43,11 +43,12 @@ polynomial_degree:
 
 .push_init:
 	movsxd rdx, [rdi + 4]
-	movsxd rdx, edx
+;	movsxd rdx, edx
 	movsxd rbx, [rdi]
-	movsxd rbx, ebx
+;	movsxd rbx, ebx
 
-	sub edx, ebx  ;changed to rbx
+;	sub edx, ebx  ;changed to rbx
+	sub rdx, rbx
 	push rdx
 	add rdi, 4
 	test r8, r8
@@ -121,6 +122,7 @@ polynomial_degree:
 .after_subtract:
 	loop .subtract_first_cell
 
+	inc rax
 	dec rsi
 	mov rcx, rsi
 
