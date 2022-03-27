@@ -1,4 +1,4 @@
-break polynomial_degree.check_zero_stack
 break polynomial_degree.subtract_first_cell
-  ignore $bpnum 32
+break polynomial_degree.check_zero_stack
+  ignore $bpnum 110
 
