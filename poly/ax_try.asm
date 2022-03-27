@@ -5,6 +5,12 @@ AVAILABLE_HALF equ 32
 REGISTER_EXPONENT equ 6
 
 polynomial_degree:
+	mov rax, 96
+	sub rax, AVAILABLE_HALF
+	add rax, BIAS
+	shr rax, REGISTER_EXPONENT
+	ret
+
 	mov rax, -1
 	mov rcx, rsi
 
@@ -42,7 +48,7 @@ polynomial_degree:
 	push rbp
 	mov rbp, rsp
 
-	mov r10, rdi ;added
+;	mov r10, rdi ;added
 
 ;	mov rbx, rdi ;added
 
@@ -62,7 +68,7 @@ polynomial_degree:
 	jz .push_init_after
 
 .push_fillers:
-	mov rax, 12
+	mov rax, r8
 	leave
 	pop rbx
 	ret
