@@ -1,22 +1,25 @@
 global polynomial_degree
 
-BIAS equ 63
-AVAILABLE_HALF equ 32
-REGISTER_EXPONENT equ 6
+BIAS			equ 63 	; Excess of bits, applied for rounding up the number.
+AVAILABLE_HALF 		equ 32 	; Ints defined in the given architecture consist of 32 bits, leaving empty 32-bit space in a 64-bit register.
+				; The omitted bits can be used for spare bits reserved for a growing number.
+REGISTER_EXPONENT 	equ 6 	; The number of bits in a 64-bit register can be rewritten as 2^6.
 
 polynomial_degree:
-	mov rax, -1
-	mov rcx, rsi
+	; Preparation of the variables
+	mov rax, -1 ; Initialisation of the result
+	mov rcx, rsi ; The amount of the given numbers is stored in a temporary counter.
 
-	push rbx
-	mov rbx, rdi
+	push rbx ; The rbx register is qualified as callee-saved register, therefore should be stored on the stack.
+	mov rbx, rdi ; After saving its value, the rgx register can be used as a temporary pointer.
 
-	mov r8, rsi
-	sub r8, AVAILABLE_HALF ;część zmieści się w rejestrze ze zwykłym intem
+	;Calculation of the number of the required registers
+	mov r8, rsi ; r8 will serve as a constant indicating the number of the needed 64-bit registers.
+	sub r8, AVAILABLE_HALF ; After saving 32-bit int in a 64-bit register, 32 bits are left.
 	add r8, BIAS
-	shr r8, REGISTER_EXPONENT
-	inc r8    ;counts the sum of needed cells
-	neg r8
+	shr r8, REGISTER_EXPONENT ; Right shift by an appropriate exponent substitutes for division by two raised to an appropriate power
+	inc r8    ; Inclusion of the one register needed for storing an initial int
+	neg r8 ; Addressing in NASM doesn't allow subtraction of registers, but adding the negation is acceptable.
 
 .check_zero_first:
 	mov rdx, [rbx]
@@ -136,17 +139,7 @@ polynomial_degree:
 	dec rsi
 	mov rcx, rsi
 
-;	lea rbx, [rbp]
-;	mov dword [r10], eax
-;	lea r10, [r10 + 4]
-
-	;lea rbx, [8 + 8*r10]
-	;add rsp, rbx
-
 	lea rbx, [rbp - 8]
-
-;	mov dword [r10], [rbx]
-;	lea r10, [r10+4]
 
 	jmp .check_zero_stack
 
