@@ -1,0 +1,2 @@
+break polynomial_degree.check_zero_stack
+
