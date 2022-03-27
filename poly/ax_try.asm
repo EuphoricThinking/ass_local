@@ -15,6 +15,7 @@ polynomial_degree:
 	sub r8, AVAILABLE_HALF ;część zmieści się w rejestrze ze zwykłym intem
 	add r8, BIAS
 	shr r8, REGISTER_EXPONENT
+	inc r8    ;counts the sum of needed cells
 ;	mov r10, r8
 	neg r8
 
@@ -58,7 +59,8 @@ polynomial_degree:
 	push rdx
 	add rdi, 4
 
-	test r8, r8
+	inc r9
+	jnz .push_fillers
 	jz .push_init_after
 
 .push_fillers:
@@ -78,9 +80,10 @@ polynomial_degree:
 	inc r9
 	jnz .push_fillers
 
-	mov r9, r8  ;restore counter for cells
+;	mov r9, r8  ;restore counter for cells
 
 .push_init_after:
+	mov r9, r8
 	loop .push_init
 
 	dec rsi
