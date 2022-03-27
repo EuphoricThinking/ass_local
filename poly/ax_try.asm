@@ -110,34 +110,27 @@ polynomial_degree:
 	lea rbx, [rbp - 8] ;first element
 
 .subtract_first_cell:
-	mov rdx, [rbx - 8 + 8*r8] ;next number
+	mov rdx, [rbx + 8*r8] ;next number
 	sub rdx, [rbx]
 	mov qword [rbx], rdx
 
 	lea rbx, [rbx - 8]
 
-	;mov dword [r10], edx; added
-	;lea r10, [r10 + 4]
-	;add r10, 4
-
-	test r8, r8
+	inc r9
 	jz .after_subtract
 
 .subtract_inner_cells:
-	;mov rax, -3
-	mov rdx, [rbx - 8 + 8*r8] ;the cell of a next number
+	mov rdx, [rbx + 8*r8] ;the cell of a next number
 	sbb rdx, [rbx]
 	mov qword [rbx], rdx
 
-;	sub rbx, 8
 	lea rbx, [rbx - 8]
 
 	inc r9
 	jnz .subtract_inner_cells
 
-	mov r9, r8
-
 .after_subtract:
+	mov r9, r8
 	loop .subtract_first_cell
 
 	inc rax
