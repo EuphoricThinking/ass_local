@@ -16,7 +16,6 @@ polynomial_degree:
 	add r8, BIAS
 	shr r8, REGISTER_EXPONENT
 	inc r8    ;counts the sum of needed cells
-;	mov r10, r8
 	neg r8
 
 .check_zero_first:
@@ -43,17 +42,9 @@ polynomial_degree:
 	push rbp
 	mov rbp, rsp
 
-;	mov r10, rdi ;added
-
-;	mov rbx, rdi ;added
-
 .push_init:
 	movsxd rdx, [rdi + 4]
 	movsxd rbx, [rdi]
-
-;	movsxd rdx, [r10 + 4];
-;	movsxd rbx, [r10]
-
 
 	sub rdx, rbx
 	push rdx
@@ -79,8 +70,6 @@ polynomial_degree:
 
 	inc r9
 	jnz .push_fillers
-
-;	mov r9, r8  ;restore counter for cells
 
 .push_init_after:
 	mov r9, r8
