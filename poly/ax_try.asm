@@ -95,12 +95,23 @@ polynomial_degree:
 	test rdx, rdx
 	jnz .check_single
 
-	dec rcx
-	jnz .check_zero_stack
-
+	test r8, r8
+	jnz .check_inner_cells
+	jz .check_after
+	
+.check_inner_cells:
+	mov rdx, [rbx]
+	sub rbx, 8
+	test rdx, rdx
+	jnz .check_single
+	
 	inc r9
-	cmp r9, 0
-	jl .check_zero_stack
+	jnz .check_inner_cells
+	
+	mov r9, r8
+	
+.check_after:
+	loop .check_zero_stack
 
 	leave
 	pop rbx
@@ -173,5 +184,4 @@ polynomial_degree:
 	leave
 	pop rbx
 	inc rax
-	mov rax, 12
 	ret
