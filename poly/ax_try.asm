@@ -51,7 +51,6 @@ polynomial_degree:
 	add rdi, 4
 
 	inc r9
-	jnz .push_fillers
 	jz .push_init_after
 
 .push_fillers:
