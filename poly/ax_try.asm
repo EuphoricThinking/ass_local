@@ -56,7 +56,7 @@ polynomial_degree:
 
 	sub rdx, rbx
 	push rdx
-	add r10, 4
+	add rdi, 4
 
 	test r8, r8
 	jz .push_init_after
