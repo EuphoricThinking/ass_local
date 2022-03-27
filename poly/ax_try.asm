@@ -82,7 +82,7 @@ polynomial_degree:
 
 .check_zero_stack:
 
-.check_cells:
+.check_zero_cells:
 	mov rdx, [rbx]
 	sub rbx, 8
 
@@ -90,21 +90,8 @@ polynomial_degree:
 	jnz .check_single
 
 	inc r9
-	jnz .check_inner_cells
-	jz .check_after
+	jnz .check_zero_cells
 
-.check_inner_cells:
-	mov rdx, [rbx]
-	sub rbx, 8
-	test rdx, rdx
-	jnz .check_single
-
-	inc r9
-	jnz .check_inner_cells
-
-;	mov r9, r8
-
-.check_after:
 	mov r9, r8
 	loop .check_zero_stack
 
