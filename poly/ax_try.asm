@@ -42,7 +42,7 @@ polynomial_degree:
 	push rbp
 	mov rbp, rsp
 
-	mov r10, rdi ;added
+;	mov r10, rdi ;added
 
 ;	mov rbx, rdi ;added
 
@@ -162,9 +162,9 @@ polynomial_degree:
 	dec rsi
 	mov rcx, rsi
 
-	lea rbx, [rbp]
-	mov dword [r10], eax
-	lea r10, [r10 + 4]
+;	lea rbx, [rbp]
+;	mov dword [r10], eax
+;	lea r10, [r10 + 4]
 
 	;lea rbx, [8 + 8*r10]
 	;add rsp, rbx
