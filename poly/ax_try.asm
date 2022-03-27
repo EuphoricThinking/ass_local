@@ -15,13 +15,14 @@ polynomial_degree:
 	sub r8, AVAILABLE_HALF ;część zmieści się w rejestrze ze zwykłym intem
 	add r8, BIAS
 	shr r8, REGISTER_EXPONENT
+;	mov r10, r8
 	neg r8
 
 .check_zero_first:
 	mov rdx, [rbx]
-	add rbx, 4
 	test edx, edx
 	jnz .preparation
+	add rbx, 4
 	loop .check_zero_first
 
 	pop rbx
@@ -41,20 +42,32 @@ polynomial_degree:
 	push rbp
 	mov rbp, rsp
 
+	mov r10, rdi ;added
+
+;	mov rbx, rdi ;added
+
 .push_init:
 	movsxd rdx, [rdi + 4]
-;	movsxd rdx, edx
 	movsxd rbx, [rdi]
-;	movsxd rbx, ebx
 
-;	sub edx, ebx  ;changed to rbx
+;	movsxd rdx, [r10 + 4];
+;	movsxd rbx, [r10]
+
+
 	sub rdx, rbx
 	push rdx
-	add rdi, 4
+	add r10, 4
+
 	test r8, r8
 	jz .push_init_after
 
 .push_fillers:
+	mov rax, 12
+	leave
+	pop rbx
+	ret
+
+
 	cmp rdx, 0
 	jge .add_positive
 
@@ -114,14 +127,20 @@ polynomial_degree:
 	mov qword [rbx], rdx
 	lea rbx, [rbx - 8]
 
+	;mov dword [r10], edx; added
+	;lea r10, [r10 + 4]
+	;add r10, 4
+
 	test r8, r8
 	jz .after_subtract
 
 .subtract_inner_cells:
+	;mov rax, -3
 	mov rdx, [rbx - 8 + 8*r8] ;the cell of a next number
 	sbb rdx, [rbx]
 	mov qword [rbx], rdx
-	;sub rbx, 8
+
+;	sub rbx, 8
 	lea rbx, [rbx - 8]
 
 	inc r9
@@ -136,7 +155,15 @@ polynomial_degree:
 	dec rsi
 	mov rcx, rsi
 
+;	lea rbx, [rbx + 16]
+;	mov dword [r10], ebx
+;	lea r10, [r10 + 4]
+
+	;lea rbx, [8 + 8*r10]
+	;add rsp, rbx
+
 	lea rbx, [rbp - 8]
+
 	jmp .check_zero_stack
 
 .ret_single_input:
