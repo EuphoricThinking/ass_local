@@ -112,8 +112,10 @@ polynomial_degree:
 	cmp rsi, 1
 	je .ret_single_stack
 
-	mov rcx, rsi
-	dec rcx ;how many iterations over numbers
+;	mov rcx, rsi
+;	dec rcx ;how many iterations over numbers
+
+	lea rcx, [rsi - 1]
 
 	mov r9, r8 ;how many cell iterations
 	lea rbx, [rbp - 8] ;first element
@@ -136,6 +138,7 @@ polynomial_degree:
 	loop .subtract_first_cell
 
 	inc rax
+
 	dec rsi
 	mov rcx, rsi
 
