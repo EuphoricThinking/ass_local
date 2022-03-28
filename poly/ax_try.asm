@@ -88,6 +88,7 @@ polynomial_degree:
 	mov r9, r8
 	loop .push_init
 
+.prepare_after_subtraction:
 	dec rsi
 	mov rcx, rsi
 
@@ -143,12 +144,13 @@ polynomial_degree:
 
 	inc rax
 
-	dec rsi
-	mov rcx, rsi
+;	dec rsi
+;	mov rcx, rsi
 
-	lea rbx, [rbp - 8]
+;	lea rbx, [rbp - 8]
 
-	jmp .check_zero_stack
+;	jmp .check_zero_stack
+	jmp .prepare_after_subtraction
 
 .ret_single_input:
 	pop rbx
