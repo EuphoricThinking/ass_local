@@ -16,8 +16,13 @@ polynomial_degree:
          ;Calculation of the number of the required registers
 	 mov     r8, rsi ; r8 will serve as a constant indicating the number of the needed 64-bit registers.
 
-	 lea      r8, [r8 - AVAILABLE_HALF + 2*BIAS + 1]
-	 shr      r8, REGISTER_EXPONENT
+	 ; After saving 32-bit int in a 64-bit register, 32 bits are left, marked as AVAILABLE_HALF.
+	 ; The solution assumes that r8 would contain the constant count of registers required per number,
+	 ; therefore the BIAS is added in order to evaluate the number of reqisters resulting from
+	 ; length_of_an_array - bits_left_in_a_register and one accounting for storing a number,
+	 ; which can be rewritten in terms of bits as [63 + (63 + 1)] = [2*63 + 1].
+	 lea     r8, [r8 - AVAILABLE_HALF + 2*BIAS + 1]
+	 shr     r8, REGISTER_EXPONENT
 
 	 ;sub     r8, AVAILABLE_HALF ; After saving 32-bit int in a 64-bit register, 32 bits are left.
 	 ;add     r8, BIAS
