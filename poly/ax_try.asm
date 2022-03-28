@@ -31,14 +31,16 @@ polynomial_degree:
 	 add     rbx, 4
 	 loop    .check_zero_first
 
-	 pop     rbx
-	 ret
+	 jmp .ret_input
+	 ;pop     rbx
+	 ;ret
 
 .preparation:
 	 inc     rax
 
 	 cmp     rsi, 1
-	 je      .ret_single_input
+	 je	 .ret_input
+	 ;je      .ret_single_input
 
 	 ;mov rcx, rsi ;iterujemy po wszystkich liczbach
 	;dec rcx   ;bez ostatniej
@@ -102,9 +104,11 @@ polynomial_degree:
 	 mov     r9, r8
 	 loop    .check_zero_stack
 
-	 leave
-	 pop     rbx
-	 ret
+	 jmp .ret_zero
+	 
+;	 leave
+;	 pop     rbx
+;	 ret
 
 .check_single:
 	 cmp     rsi, 1
@@ -145,12 +149,19 @@ polynomial_degree:
 ;	jmp .check_zero_stack
 	 jmp     .prepare_after_subtraction
 
-.ret_single_input:
+.ret_single_stack:
+	inc rax
+
+.ret_zero:
+	leave
+
+.ret_input:
 	 pop     rbx
 	 ret
 
-.ret_single_stack:
-	 leave
-	 pop     rbx
-	 inc rax
-	 ret
+;.ret_single_input:
+;.ret_single_stack:
+;	 leave
+;	 pop     rbx
+;	 inc rax
+;	 ret
