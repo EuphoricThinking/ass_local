@@ -42,8 +42,10 @@ polynomial_degree:
 	cmp rsi, 1
 	je .ret_single_input
 
-	mov rcx, rsi ;iterujemy po wszystkich liczbach
-	dec rcx   ;bez ostatniej
+	;mov rcx, rsi ;iterujemy po wszystkich liczbach
+	;dec rcx   ;bez ostatniej
+
+	lea rcx, [rsi - 1]
 
 	mov r9, r8 ;iterujemy po komórkach
 
