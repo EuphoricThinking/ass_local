@@ -7,17 +7,19 @@ REGISTER_EXPONENT 	equ 6 	; The number of bits in a 64-bit register can be rewri
 
 polynomial_degree:
          ; Preparation of the variables
-	 mov     rax, -1 ; Initialisation of the result
-	 mov     rcx, rsi ; The amount of the given numbers is stored in a temporary counter.
+	 mov     rax, -1        ; Initialisation of the result
+	 mov     rcx, rsi       ; The amount of the given numbers is stored in a temporary counter.
 
-	 push    rbx ; The rbx register is qualified as callee-saved register, therefore should be stored on the stack.
-	 mov     rbx, rdi ; After saving its value, the rgx register can be used as a temporary pointer.
+	 push    rbx            ; The rbx register is qualified as callee-saved register, therefore should be stored on the stack.
+	 mov     rbx, rdi       ; After saving its value, the rbx register can be used as a temporary pointer.
 
 	 ; After saving 32-bit int in a 64-bit register, 32 bits are left, marked as AVAILABLE_HALF.
 	 ; The solution assumes that r8 would contain the constant count of registers required per number,
 	 ; therefore the BIAS is added in order to evaluate the number of reqisters resulting from
 	 ; length_of_an_array - bits_left_in_a_register and one accounting for storing a number,
-	 ; which can be rewritten in terms of bits as [63 + (63 + 1)] = [2*63 + 1].
+	 ; which can be rewritten in terms of bits as [63 + (63 + 1)] = [2*63 + 1]. Conversion
+	 ; from bits to registers is performed using right shift by 6 positions, which substitutes
+	 ; for the division by 2^6 = 64.
 	 lea     r8, [rsi - AVAILABLE_HALF + 2*BIAS + 1]
 	 shr     r8, REGISTER_EXPONENT
 
@@ -26,7 +28,7 @@ polynomial_degree:
 	 ;shr     r8, REGISTER_EXPONENT ; Right shift by an appropriate exponent substitutes for division by two raised to an appropriate power
 	 ;inc     r8    ; Inclusion of the one register needed for storing an initial int
 
-	 neg     r8 ; Addressing in NASM doesn't allow subtraction of registers, but adding the negation is acceptable.
+	 neg     r8             ; Addressing in NASM doesn't allow subtraction of registers, but adding the negation is acceptable.
 
 .check_zero_first:
 	mov rdx, [rbx]
