@@ -15,10 +15,15 @@ polynomial_degree:
 
          ;Calculation of the number of the required registers
 	 mov     r8, rsi ; r8 will serve as a constant indicating the number of the needed 64-bit registers.
-	 sub     r8, AVAILABLE_HALF ; After saving 32-bit int in a 64-bit register, 32 bits are left.
-	 add     r8, BIAS
-	 shr     r8, REGISTER_EXPONENT ; Right shift by an appropriate exponent substitutes for division by two raised to an appropriate power
-	 inc     r8    ; Inclusion of the one register needed for storing an initial int
+
+	 lea      r8, [r8 - AVAILABLE_HALF + 2*BIAS + 1]
+	 shr      r8, REGISTER_EXPONENT
+
+	 ;sub     r8, AVAILABLE_HALF ; After saving 32-bit int in a 64-bit register, 32 bits are left.
+	 ;add     r8, BIAS
+	 ;shr     r8, REGISTER_EXPONENT ; Right shift by an appropriate exponent substitutes for division by two raised to an appropriate power
+	 ;inc     r8    ; Inclusion of the one register needed for storing an initial int
+
 	 neg     r8 ; Addressing in NASM doesn't allow subtraction of registers, but adding the negation is acceptable.
 
 .check_zero_first:
