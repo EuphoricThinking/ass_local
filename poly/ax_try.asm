@@ -6,20 +6,20 @@ AVAILABLE_HALF 		equ 32 	; Ints defined in the given architecture consist of 32 
 REGISTER_EXPONENT 	equ 6 	; The number of bits in a 64-bit register can be rewritten as 2^6.
 
 polynomial_degree:
-	; Preparation of the variables
-	mov rax, -1 ; Initialisation of the result
-	mov rcx, rsi ; The amount of the given numbers is stored in a temporary counter.
+         ; Preparation of the variables
+	 mov     rax, -1 ; Initialisation of the result
+	 mov     rcx, rsi ; The amount of the given numbers is stored in a temporary counter.
 
-	push rbx ; The rbx register is qualified as callee-saved register, therefore should be stored on the stack.
-	mov rbx, rdi ; After saving its value, the rgx register can be used as a temporary pointer.
+	 push    rbx ; The rbx register is qualified as callee-saved register, therefore should be stored on the stack.
+	 mov     rbx, rdi ; After saving its value, the rgx register can be used as a temporary pointer.
 
-	;Calculation of the number of the required registers
-	mov r8, rsi ; r8 will serve as a constant indicating the number of the needed 64-bit registers.
-	sub r8, AVAILABLE_HALF ; After saving 32-bit int in a 64-bit register, 32 bits are left.
-	add r8, BIAS
-	shr r8, REGISTER_EXPONENT ; Right shift by an appropriate exponent substitutes for division by two raised to an appropriate power
-	inc r8    ; Inclusion of the one register needed for storing an initial int
-	neg r8 ; Addressing in NASM doesn't allow subtraction of registers, but adding the negation is acceptable.
+         ;Calculation of the number of the required registers
+	 mov     r8, rsi ; r8 will serve as a constant indicating the number of the needed 64-bit registers.
+	 sub     r8, AVAILABLE_HALF ; After saving 32-bit int in a 64-bit register, 32 bits are left.
+	 add     r8, BIAS
+	 shr     r8, REGISTER_EXPONENT ; Right shift by an appropriate exponent substitutes for division by two raised to an appropriate power
+	 inc     r8    ; Inclusion of the one register needed for storing an initial int
+	 neg     r8 ; Addressing in NASM doesn't allow subtraction of registers, but adding the negation is acceptable.
 
 .check_zero_first:
 	mov rdx, [rbx]
@@ -112,14 +112,7 @@ polynomial_degree:
 	lea rbx, [rbp - 8] ;first element
 
 .subtract_first_cell:
-	mov rdx, [rbx + 8*r8] ;next number
-	sub rdx, [rbx]
-	mov qword [rbx], rdx
-
-	lea rbx, [rbx - 8]
-
-	inc r9
-	jz .after_subtract
+	clc
 
 .subtract_inner_cells:
 	mov rdx, [rbx + 8*r8] ;the cell of a next number
